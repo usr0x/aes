@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/aes.min.js" integrity="sha512-4b1zfeOuJCy8B/suCMGNcEkMcQkQ+/jQ6HlJIaYVGvg2ZydPvdp7GY0CuRVbNpSxNVFqwTAmls2ftKSkDI9vtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="./style.css">
+    <title>AES Encrypt & Decrypt</title>
+</head>
+<body>
+    <div class="split">
+        <div class="splitleft" id="encryptDIV">
+            <span>Input Plain String</span>
+            <textarea name="plainStr" id="plainStr"></textarea>
+            <span>Input Password</span>
+            <input type="text" id="passEncInp">
+            <button onclick="encryptIt()">Encrypt</button>
+            <hr>
+            <div  id="enc0div" class="hide">
+                <span>Encrypted Text</span>
+                <textarea name="enc000" id="enc000"></textarea>
+            </div>
+        </div>
+        <div class="vl"></div>
+        <div class="splitright" id="decryptDIV">
+            <span>Input Encrypted Text</span>
+            <textarea name="encTxt" id="encTxt"></textarea>
+            <span>Input Password</span>
+            <input type="text" id="passDecInp">
+            <button onclick="decryptIt()">Decrypt</button>
+            <hr>
+            <div  id="dec0div" class="hide">
+                <span>Plain String</span>
+                <textarea name="dec000" id="dec000"></textarea>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script>
+        async function encryptIt(){
+            let secPass = document.getElementById("passEncInp").value
+                let pStr = document.getElementById("plainStr").value;
+                let enc0 = CryptoJS.AES.encrypt(pStr, secPass);
+                document.getElementById("enc0div").style.display = "block";
+                document.getElementById("enc000").innerHTML = enc0;
+        }
+        async function decryptIt(){
+            let secPass = document.getElementById("passDecInp").value
+                let eTxt = document.getElementById("encTxt").value;
+                let dec0 = CryptoJS.AES.decrypt(eTxt, secPass);
+                let dec1 = await dec0.toString(CryptoJS.enc.Utf8)
+                document.getElementById("dec0div").style.display = "block";
+                document.getElementById("dec000").innerHTML = dec1;
+        }
+    </script>
+</body>
+</html>
